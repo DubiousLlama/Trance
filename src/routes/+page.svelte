@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import Overlay from './overlay.svelte'
 
   // Define types for player and timeout
   let player: YT.Player | undefined;
@@ -16,9 +17,6 @@
     "https://www.youtube.com/shorts/uzAytgFuBR4",
     "https://www.youtube.com/shorts/V8cgRAZdQKI",
   ];
-
-  // External URL to load when the video ends
-  let externalUrl: string = "https://www.eernissefuneralhome.com/obituaries/William-D-Elias-Mitchell?obId=31614505";
 
   // Variable to track the current video index
   let currentIndex: number = 0;
@@ -84,6 +82,10 @@
     showExternalIframe = false;
   }
 
+  function like(): void{
+
+  }
+
   // Initialize the countdown on mount
   onMount(() => {
     startCountdown();
@@ -105,30 +107,21 @@
     <iframe
       title="Medication"
       id="youtubePlayer"
-      width="450vh"
-      height="800vh"
+      class="yt"
       src={getEmbedUrl(shortUrls[currentIndex])}
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
     ></iframe>
-    <button on:click={nextVideo}>⬇️ Next</button>
+    <div id = "rightButtons">
+      <button on:click={like}>Like</button>
+      <button on:click={nextVideo}>⬇️ Next</button>
+    </div>
   </div>
 
   <!-- Fullscreen iframe that fades in when the video ends -->
   {#if showExternalIframe}
-    <div class="overlay" on:click={escape}>
-    <button id="escape">Escape</button>
-    <iframe
-        title="Disease"
-        width="100%"
-        height="100%"
-        src={externalUrl}
-        frameborder="0"
-        allowfullscreen
-        pointer-events="none"
-      ></iframe>
-    </div>
+    <Overlay buttonClick={escape}/>
   {/if}
 </main>
 
@@ -138,11 +131,21 @@
     padding: 20px;
   }
 
+  .yt {
+    width: 45vh;
+    height: 80vh;
+  }
+
   .navigation {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
+  }
+
+  #rightButtons {
+    display: flex;
+    flex-direction: column;
   }
 
   iframe {
@@ -158,68 +161,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin: 5px;
   }
 
   button:disabled {
     background-color: grey;
     cursor: not-allowed;
-  }
-
-  /* Fullscreen overlay that fades in */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 10s forwards ease-in-out;
-  }
-
-  #escape {
-    position: absolute;
-    top: 10px;
-    padding: 10px 20px;
-    font-size: 36px;
-    background-color: #f00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    animation: fadeIn2 12s forwards ease-in;
-  }
-
-  h1 {
-    margin-top: 0px;
-  }
-
-  h3 {
-    font-weight: lighter;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      pointer-events: none;
-    }
-    to {
-      opacity: 1;
-      pointer-events: all;
-    }
-  }
-
-    @keyframes fadeIn2 {
-    0% {
-      opacity: 0;
-    }
-    80% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
   }
 </style>
