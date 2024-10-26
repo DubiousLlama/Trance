@@ -1,25 +1,29 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import Overlay from './overlay.svelte'
+  import { reccomend, videoList, Video, getWatchedList } from '$lib/reccomend';
 
   // Define types for player and timeout
   let player: YT.Player | undefined;
   let timeout: ReturnType<typeof setTimeout>;
 
   // List of YouTube Short URLs
-  let shortUrls: string[] = [
-    "https://www.youtube.com/shorts/HTHhQfzsALY",
-    "https://www.youtube.com/shorts/MGCDps-C_a4",
-    "https://www.youtube.com/shorts/ioAkpOCZeHk",
-    "https://www.youtube.com/shorts/a5yYVZYY0vI",
-    "https://www.youtube.com/shorts/Fu4AWHjeS_k",
-    "https://www.youtube.com/shorts/S2oGHn4FonA",
-    "https://www.youtube.com/shorts/uzAytgFuBR4",
-    "https://www.youtube.com/shorts/V8cgRAZdQKI",
-  ];
+  // let shortUrls: string[] = [
+  //   "https://www.youtube.com/shorts/HTHhQfzsALY",
+  //   "https://www.youtube.com/shorts/MGCDps-C_a4",
+  //   "https://www.youtube.com/shorts/ioAkpOCZeHk",
+  //   "https://www.youtube.com/shorts/a5yYVZYY0vI",
+  //   "https://www.youtube.com/shorts/Fu4AWHjeS_k",
+  //   "https://www.youtube.com/shorts/S2oGHn4FonA",
+  //   "https://www.youtube.com/shorts/uzAytgFuBR4",
+  //   "https://www.youtube.com/shorts/V8cgRAZdQKI",
+  // ];
+
+  let buttonStatus = "Like"
+  let buttonColor = "red"
 
   // Variable to track the current video index
-  let currentIndex: number = 0;
+  let currentVideo: Video = videoList[0];
 
   // Variable to track if the external iframe should be displayed
   let showExternalIframe: boolean = false;
@@ -35,25 +39,17 @@
   }
 
   // Navigate to the previous video in the list
-  function prevVideo(): void {
-    console.log("Previous button clicked");
-    if (currentIndex === 0) {
-    currentIndex = shortUrls.length - 1;
-    } else {
-    currentIndex--;
-    }
+  function nextVideo(): void {
+    console.log("Next button clicked");
+    currentVideo = reccomend(videoList, currentVideo);
     resetTimer();  // Reset timer when user interacts
 
   }
 
-  // Navigate to the next video in the list
-  function nextVideo(): void {
-    console.log("Next button clicked");
-    if (currentIndex === shortUrls.length - 1) {
-    currentIndex = 0;
-    } else {
-    currentIndex++;
-    }
+  // Navigate to the next video in the lists
+  function prevVideo(): void {
+    console.log("Previous button clicked");
+    currentVideo = getWatchedList()[-1]
     resetTimer();  // Reset timer when user interacts
   }
 
@@ -83,7 +79,15 @@
   }
 
   function like(): void{
+    if(buttonStatus == "Like") {
+      buttonStatus = "Liked";
+      buttonColor = "grey";
+    } else {
+      buttonStatus = "Like";
+      buttonColor = "red";
+    }
 
+    currentVideo?.react("love");
   }
 
   // Initialize the countdown on mount
@@ -108,13 +112,13 @@
       title="Medication"
       id="youtubePlayer"
       class="yt"
-      src={getEmbedUrl(shortUrls[currentIndex])}
+      src={getEmbedUrl(currentVideo?.url ?? "")}
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
     ></iframe>
     <div id = "rightButtons">
-      <button on:click={like}>Like</button>
+      <button style="background-color: {buttonColor}" on:click={like}>{buttonStatus}</button>
       <button on:click={nextVideo}>⬇️ Next</button>
     </div>
   </div>
