@@ -49,6 +49,10 @@
     margin-top: 0px;
   }
 
+  h3 {
+    font-weight: lighter;
+  }
+
   #disease {
     background-color: black;
     display: flex;

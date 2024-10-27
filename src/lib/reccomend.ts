@@ -25,6 +25,7 @@ export class Video {
     }
 
     public react(type:string):void {
+      
       if(this.reaction == type) {
         this.reaction = "";
         updateAlgorithm(type, this.tags, false)
@@ -113,7 +114,7 @@ export function reccomend(videos: Video[], currentVideo:string): string {
       }
     }
   }
-  
+
   // Step 1: Calculate the total sum of chances
   const totalChance = videos.reduce((sum, video) => sum + video.chance, 0);
 
