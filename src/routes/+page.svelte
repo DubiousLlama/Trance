@@ -158,8 +158,8 @@ onMount(() => {
 
 <main class="youtube-short">
 
-	<h1>Trance v4.5.1</h1>
-	<h3>Treatment in progress. Scroll 3-4 times per minute, or as prescribed by a physician.</h3>
+	<!-- <h1>Trance v4.5.1</h1>
+	<h3>Treatment in progress. Scroll 3-4 times per minute, or as prescribed by a physician.</h3> -->
 	<!-- Display countdown timer
   <div class="countdown">
     Time remaining: {countdown} seconds
