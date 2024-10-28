@@ -2,58 +2,48 @@
 	import { onMount } from 'svelte';
 	import Overlay from './overlay.svelte';
 	import { reccomend, videoList, Video, getWatchedList, addWatchItem, getVideoByUrl, resetWatchHistory } from '$lib/reccomend';
-    import EmojiButtons from './emojiButtons.svelte';
+	import EmojiButtons from './emojiButtons.svelte';
 	import NavButtons from './navButtons.svelte';
 
-	// Define types for player and timeout
-	let player: any;
+	// Define player and timeout
+	let videoElement: HTMLVideoElement;
 	let timeout: ReturnType<typeof setTimeout>;
 
-	// Variable to track the current video index
+	// Track current video and index
 	let currentVideo: Video = videoList[0];
-
 	let videoIndex = 0;
 
 	const defaultVideo = videoList[0];
 
-	// Variable to track if the external iframe should be displayed
+	// Track if external overlay should be displayed
 	let showExternalIframe: boolean = false;
 
-	let countdown: number = 10; // Timer starts at 30 seconds
-	let countdownInterval: ReturnType<typeof setInterval>; // Interval for countdown
+	let countdown: number = 8;
+	let countdownInterval: ReturnType<typeof setInterval>;
 
-	// Extract the video ID from the current URL to create the embed URL
-	function getEmbedUrl(url: string): string {
-		const videoId: string = url.split('/shorts/')[1];
-		console.log('Current video ID: ', videoId);
-		return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&loop=1`;
-	}
-
-	// Navigate to the previous video in the list
+	// Navigate to the next video
 	function nextVideo(): void {
-		console.log('Next button clicked');
-		videoIndex = videoIndex + 1;
+		videoIndex += 1;
 		if (videoIndex >= getWatchedList().length) {
             let newVideoUrl = reccomend(videoList, currentVideo.url);
-            console.log("Getting new video")
             addWatchItem(newVideoUrl);
 			currentVideo = getVideoByUrl(newVideoUrl) ?? defaultVideo;
 		} else {
-            console.log("Getting next video")
-            console.log(getWatchedList())
             let nextVideoUrl = getWatchedList().at(videoIndex) ?? defaultVideo.url;
             currentVideo = getVideoByUrl(nextVideoUrl) ?? defaultVideo;
 		}
-		resetTimer(); // Reset timer when user interacts
+		resetTimer();
+		loadCurrentVideo();
 	}
 
-	// Navigate to the next video in the lists
+	// Navigate to the previous video
 	function prevVideo(): void {
 		if (videoIndex > 0) {
 			videoIndex -= 1;
 			let lastVideoUrl = getWatchedList().at(videoIndex) ?? defaultVideo.url;
 			currentVideo = getVideoByUrl(lastVideoUrl) ?? defaultVideo;
-			resetTimer(); // Reset timer when user interacts
+			resetTimer();
+			loadCurrentVideo();
 		}
 	}
 
@@ -63,18 +53,18 @@
 			if (countdown > 0) {
 				countdown--;
 			} else {
-				showExternalIframe = true; // Show the external iframe when timer hits 0
+				showExternalIframe = true;
 				clearInterval(countdownInterval);
 			}
-		}, 1000); // Countdown decreases every second
+		}, 1000);
 	}
 
-	// Reset the countdown timer to 20 and start it again
+	// Reset the countdown timer
 	export function resetTimer(): void {
-		clearInterval(countdownInterval); // Stop any existing timer
-		countdown = 20; // Reset countdown to 20 seconds
-		showExternalIframe = false; // Hide iframe when reset
-		startCountdown(); // Start the countdown again
+		clearInterval(countdownInterval);
+		countdown = 15;
+		showExternalIframe = false;
+		startCountdown();
 	}
 
 	function escape(): void {
@@ -82,118 +72,104 @@
 		showExternalIframe = false;
 	}
 
-	// Add these variables at the top of your script with the other declarations
-let touchStartY: number = 0;
-let scrollTimeout: ReturnType<typeof setTimeout>;
-let isScrolling: boolean = false;
+	// Load the current video into the video player
+	function loadCurrentVideo(): void {
+		if (videoElement) {
+			videoElement.src = currentVideo.url; // Load local video file
+			videoElement.play();
+		}
+	}
 
-// Add this function after your existing function declarations
-function handleScroll(event: WheelEvent | TouchEvent): void {
-    if (isScrolling) return;
-    isScrolling = true;
+	let touchStartY: number = 0;
+	let scrollTimeout: ReturnType<typeof setTimeout>;
+	let isScrolling: boolean = false;
 
-    // Clear existing scroll timeout
-    clearTimeout(scrollTimeout);
+	function handleScroll(event: WheelEvent | TouchEvent): void {
+		if (isScrolling) return;
+		isScrolling = true;
 
-    if (event instanceof WheelEvent) {
-        // Handle mouse wheel/trackpad scroll
-        if (event.deltaY > 20) {
-            nextVideo();
-        } else if (event.deltaY < -20) {
-            prevVideo();
-        }
-    }
+		clearTimeout(scrollTimeout);
 
-    // Set a timeout to prevent rapid consecutive scrolls
-    scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-    }, 250); // Adjust this value to control scroll sensitivity
-}
+		if (event instanceof WheelEvent) {
+			if (event.deltaY > 20) {
+				nextVideo();
+			} else if (event.deltaY < -20) {
+				prevVideo();
+			}
+		}
 
-// Add these touch event handlers
-function handleTouchStart(event: TouchEvent): void {
-    touchStartY = event.touches[0].clientY;
-}
+		scrollTimeout = setTimeout(() => {
+			isScrolling = false;
+		}, 250);
+	}
 
-function handleTouchEnd(event: TouchEvent): void {
-    const touchEndY = event.changedTouches[0].clientY;
-    const deltaY = touchStartY - touchEndY;
+	function handleTouchStart(event: TouchEvent): void {
+		touchStartY = event.touches[0].clientY;
+	}
 
-    // Threshold for swipe detection (adjust as needed)
-    const threshold = 50;
+	function handleTouchEnd(event: TouchEvent): void {
+		const touchEndY = event.changedTouches[0].clientY;
+		const deltaY = touchStartY - touchEndY;
 
-    if (Math.abs(deltaY) > threshold) {
-        if (deltaY > 0) {
-            nextVideo(); // Swipe up
-        } else {
-            prevVideo(); // Swipe down
-        }
-    }
-}
+		const threshold = 50;
 
-// Modify your onMount to include the event listeners
-onMount(() => {
-    // Add event listeners for scroll and touch
-    window.addEventListener('wheel', handleScroll, { passive: true });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+		if (Math.abs(deltaY) > threshold) {
+			if (deltaY > 0) {
+				nextVideo();
+			} else {
+				prevVideo();
+			}
+		}
+	}
 
-    // Clean up event listeners on component destruction
-    return () => {
-        window.removeEventListener('wheel', handleScroll);
-        window.removeEventListener('touchstart', handleTouchStart);
-        window.removeEventListener('touchend', handleTouchEnd);
-    };
-});
-
-	// Initialize the countdown on mount
 	onMount(() => {
+		window.addEventListener('wheel', handleScroll, { passive: true });
+		window.addEventListener('touchstart', handleTouchStart, { passive: true });
+		window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+		// Start countdown and reset watch history on mount
 		startCountdown();
-        resetWatchHistory();
+		resetWatchHistory();
+
+		return () => {
+			window.removeEventListener('wheel', handleScroll);
+			window.removeEventListener('touchstart', handleTouchStart);
+			window.removeEventListener('touchend', handleTouchEnd);
+		};
 	});
 </script>
 
-<main class="youtube-short">
-
-	<!-- <h1>Trance v4.5.1</h1>
-	<h3>Treatment in progress. Scroll 3-4 times per minute, or as prescribed by a physician.</h3> -->
-	<!-- Display countdown timer -->
-  <!-- <div class="countdown">
-    Time remaining: {countdown} seconds
-  </div> -->
-
-	<!-- Buttons to navigate between videos -->
+<main class="video-short">
 	<div class="navigation">
-		<iframe
+		<video
+			bind:this={videoElement}
 			title="Medication"
-			id="youtubePlayer"
-			class="yt"
-			src={getEmbedUrl(currentVideo?.url ?? '')}
-			frameborder="0"
-			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-			allowfullscreen
-		></iframe>
+			class="video-player"
+			src={currentVideo?.url ?? ''}
+			playsinline
+			controls
+			autoplay
+			on:ended={loadCurrentVideo}
+		></video>
 		<div id="rightButtons">
-			<EmojiButtons currentVideo={currentVideo}  resetTimer={resetTimer}/>
+			<EmojiButtons currentVideo={currentVideo} resetTimer={resetTimer} />
 		</div>
 	</div>
 
-	<!-- Fullscreen iframe that fades in when the video ends -->
 	{#if showExternalIframe}
 		<Overlay buttonClick={escape} />
 	{/if}
+
+	<NavButtons {prevVideo} {nextVideo} />
 </main>
 
-		<NavButtons     {prevVideo}
-    {nextVideo}/>
-
 <style>
-	.youtube-short {
+	.video-short {
 		text-align: center;
 		padding: 20px;
 	}
 
-	.yt {
+	.video-player {
 		width: 45vh;
 		height: 80vh;
 	}
@@ -210,7 +186,7 @@ onMount(() => {
 		flex-direction: column;
 	}
 
-	iframe {
+	/* iframe {
 		border-radius: 10px;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
@@ -233,5 +209,5 @@ onMount(() => {
 	.hidden {
 		visibility: hidden;
 		pointer-events: none;
-	}
+	} */
 </style>

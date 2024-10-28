@@ -41,47 +41,46 @@ export class Video {
 
 export const videoList: Video[] = [
   // Video 1
-  new Video("https://www.youtube.com/shorts/ZfE-HzH8iO0", ["empty", "depression"]), // Memes that will cure your depression
+  new Video("static/videos/depressioncurememes.mp4", ["empty", "depression"]), // Memes that will cure your depression
 
-  new Video("https://youtube.com/shorts/6PBoD1dDdfE", ["trance", "ad", "depression", "capitalism"], 3, 1), //Trance Ad
-  new Video("https://youtube.com/shorts/eFcl2UUoEuM", ["minecraft", "outside", "empty"], 8, 0), //First Jake vid
-  new Video("https://youtube.com/shorts/kL7207F_su4", ["minecraft", "outside"], -1, 0.5, ["https://youtube.com/shorts/eFcl2UUoEuM"], 14), // Second Jake vid
-  new Video("https://youtube.com/shorts/NkB6KhhXZS0", ["outside", "trance"], -1, 0.5, ["https://youtube.com/shorts/kL7207F_su4"], 22), // Third Jake vid
-  new Video("https://youtube.com/shorts/qBdk00HcKhY", ["outside", ], -1, 0.5, ["https://youtube.com/shorts/NkB6KhhXZS0"], 30), // Final Jake vid
-  new Video("https://youtube.com/shorts/C7Q8wlSX7Co", ["altright", "trance", "podcast"], 12, 0), // First podcast
-  new Video("https://youtube.com/shorts/s4As7yCp6j0", ["altright", "trance", "podcast", "conspiracy"], -1, 0.5, ["https://youtube.com/shorts/C7Q8wlSX7Co"], 14), // Second podcast
-  new Video("https://youtube.com/shorts/rZCPgfdMvGA", ["trance"], -1, 1, ["https://youtube.com/shorts/6PBoD1dDdfE", "https://youtube.com/shorts/s4As7yCp6j0"], 24),
+  new Video("static/videos/TranceAd.mp4", ["trance", "ad", "depression", "capitalism"], 3, 1), //Trance Ad
+  new Video("static/videos/Jake01.mp4", ["minecraft", "outside", "empty"], 8, 0), //First Jake vid
+  new Video("static/videos/Jake02.mp4", ["minecraft", "outside"], -1, 0.5, ["static/videos/Jake01.mp4"], 14), // Second Jake vid
+  new Video("static/videos/Jake03.mp4", ["outside", "trance"], -1, 0.5, ["static/videos/Jake02.mp4"], 22), // Third Jake vid
+  new Video("static/videos/Jake04.mp4", ["outside", ], -1, 0.5, ["static/videos/Jake03.mp4"], 30), // Final Jake vid
+  new Video("static/videos/Podcast 1.mp4", ["altright", "trance", "podcast"], 12, 0), // First podcast
+  new Video("static/videos/Podcast 2.mp4", ["altright", "trance", "podcast", "conspiracy"], -1, 0.5, ["static/videos/Podcast 1.mp4"], 14), // Second podcast
+  new Video("static/videos/Glitch.mp4", ["trance"], -1, 1, ["static/videos/TranceAd.mp4", "static/videos/Podcast 2.mp4"], 24),
 
   // Self-referential
-  new Video("https://www.youtube.com/shorts/MGCDps-C_a4", ["algorithm", "trance"], 29, 0.5, [], 28), // Stop scrolling
-  new Video("https://www.youtube.com/shorts/6oF5p-za8zg", ["capitalism", "trance"]),
+  new Video("static/videos/stopscrolling.mp4", ["algorithm", "trance"], 29, 0.5, [], 28), // Stop scrolling
+  new Video("static/videos/welcometotheinternet.mp4", ["capitalism", "trance"]),
 
   // Advertisements
-  new Video("https://www.youtube.com/shorts/k-H7Xfih6eA", ["ad", "capitalism"]), //Finance a pizza
-  new Video("https://www.youtube.com/shorts/cqORf9PgluA", ["ad", "algorithm", "capitalism"], 9, 2, [], 7), // Real time behavior
-  new Video("https://youtube.com/shorts/wlDXkGvy9gY", ["altright", "ad", "capitalism"], -1, 0.5), //Replika
+  new Video("static/videos/financepizza.mp4", ["ad", "capitalism"]), //Finance a pizza
+  new Video("static/videos/mailchimp.mp4", ["ad", "algorithm", "capitalism"], 9, 2, [], 7), // Real time behavior
+  new Video("static/videos/Replikaad.mp4", ["altright", "ad", "capitalism"], -1, 0.5), //Replika
 
   //Random stuff
-  new Video("https://www.youtube.com/shorts/LLo9u8GYUU0", ["empty"], -1, 2), // Trick shots
-  new Video("https://www.youtube.com/shorts/LLo9u8GYUU0", ["altright"], -1, 0.5), // guns
-  new Video("https://www.youtube.com/shorts/Fu4AWHjeS_k", ["empty"], -1, 0.5), // Suits
-  new Video("https://www.youtube.com/shorts/uG-8F_z7U1c", ["minecraft", "empty"]), // Horny
-  new Video("https://www.youtube.com/shorts/vAyUt7AIPFU", ["empty", "altright", "minecraft", "depression"]), // AITA for telling my GF depression is a skill issue
+  new Video("static/videos/trickshots.mp4", ["empty"], -1, 2), // Trick shots
+  new Video("static/videos/suits.mp4", ["empty"], -1, 0.5), // Suits
+  new Video("static/videos/reddithorny.mp4", ["minecraft", "empty"]), // Horny
+  new Video("static/videos/depressionskillissue.mp4", ["empty", "altright", "minecraft", "depression"]), // AITA for telling my GF depression is a skill issue
 
 
   // Mental health
-  new Video("https://www.youtube.com/shorts/WDiLJJ753ww", ["depression"]),
-  new Video("https://www.youtube.com/shorts/G_iSpWw_K4c", ["depression"]),
-  new Video("https://www.youtube.com/shorts/4Gr4BWXhqOQ", ["altright", "depression"]),
-  new Video("https://www.youtube.com/shorts/ZIAspOd7sEc", ["depression"]),
+  new Video("static/videos/howknowdepression.mp4", ["depression"]),
+  new Video("static/videos/selfdiagnose.mp4", ["depression"]),
+  new Video("static/videos/niceguys.mp4", ["altright", "depression"]),
+  new Video("static/videos/rockbottom.mp4", ["depression"]),
 
 
   // Alt Right
-  new Video("https://www.youtube.com/shorts/l62gTnHaGL8", ["altright"], -1, 0.5, [], 10),
-  new Video("https://www.youtube.com/shorts/vraRt6dj-wE", ["altright", "depression", "outside"], -1, 0.5, [], 8),
-  new Video("https://www.youtube.com/shorts/l9UWpLr9NEM", ["altright", "conspiracy"], -1, 0.5, [], 14),
-  new Video("https://www.youtube.com/shorts/0XxBKEA4XD4", ["altright", "podcast"], -1, 0.5, [], 10),
-  new Video("https://www.youtube.com/shorts/eOmnmma25gE", ["altright"], -1, 0.5, [], 12)
+  new Video("hstatic/videos/dawkin.mp4", ["altright"], -1, 0.5, [], 10),
+  new Video("static/videos/jp_depression.mp4", ["altright", "depression", "outside"], -1, 0.5, [], 8),
+  new Video("static/videos/joero.mp4", ["altright", "conspiracy", "podcast"], -1, 0.5, [], 14),
+  new Video("static/videos/marriage.mp4", ["altright", "podcast"], -1, 0.5, [], 10),
+  new Video("static/videos/femarmy.mp4", ["altright"], -1, 0.5, [], 12)
 ]
 
 let watchedList: string[] = [videoList[0].url];
