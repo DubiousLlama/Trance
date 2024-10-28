@@ -27,14 +27,12 @@
 
 <style>
   .nav-container {
-    position: fixed;
-    right: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
+
     display: flex;
     flex-direction: column;
     gap: 1rem;
     pointer-events: auto;
+    align-items: center;
   }
 
   .nav-button {

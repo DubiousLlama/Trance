@@ -140,27 +140,25 @@
 </script>
 
 <main class="video-short">
-	<div class="navigation">
+	<div class="navigation">'
+		<div id="rightButtons"><EmojiButtons currentVideo={currentVideo} resetTimer={resetTimer} /></div>
+		<div>
 		<video
 			bind:this={videoElement}
 			title="Medication"
 			class="video-player"
-			src={currentVideo?.url ?? ''}
+			src={currentVideo?.url ?? ''} 
 			playsinline
 			controls
 			autoplay
 			on:ended={loadCurrentVideo}
-		></video>
-		<div id="rightButtons">
-			<EmojiButtons currentVideo={currentVideo} resetTimer={resetTimer} />
-		</div>
+		></video></div>
+		<div id="rightButtons"><NavButtons {prevVideo} {nextVideo} /></div>
 	</div>
 
 	{#if showExternalIframe}
 		<Overlay buttonClick={escape} />
 	{/if}
-
-	<NavButtons {prevVideo} {nextVideo} />
 </main>
 
 <style>
