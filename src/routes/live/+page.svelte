@@ -14,6 +14,7 @@
 	// Track current video and index
 	let currentVideo: Video = videoList[0];
 	let videoIndex = 0;
+	let backoff = 1;
 
 	const defaultVideo = videoList[0];
 
@@ -68,7 +69,8 @@
 	// Reset the countdown timer
 	export function resetTimer(): void {
 		clearInterval(countdownInterval);
-		countdown = 15;
+		countdown = 10 + 2.5*backoff;
+		backoff++;
 		showExternalIframe = false;
 		startCountdown();
 	}

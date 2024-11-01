@@ -1,6 +1,7 @@
-import {videoList, getWatchedList} from '$lib/reccomend';
+import {videoList, getWatchedList, altRightOnly} from '$lib/reccomend';
 
 let altRightEndTrigger : number = 9999;
+let jp_torrent_triggered : boolean = false;
 
 function countReactedWithTag(tag : string) : number {
    
@@ -29,8 +30,10 @@ export function checkEndConditions(url : string, react : string = "") : string {
     }
 
     // Check for alt-right only condition
-    if (countReactedWithTag("altright") >= 4) {
-        altRightEndTrigger = getWatchedList().length + 5;
+    if (countReactedWithTag("altright") >= 3 && !jp_torrent_triggered) {
+        altRightEndTrigger = getWatchedList().length + 7;
+        jp_torrent_triggered = true;
+        altRightOnly();
     }
 
     // Check for the friend end condition
@@ -41,7 +44,7 @@ export function checkEndConditions(url : string, react : string = "") : string {
     }
 
     // Check for the trance end condition
-    if (countReactedWithTag("trance") >= 3 || (countReactedWithTag("trance") >= 1 && getWatchedList().length > 40)) {
+    if (countReactedWithTag("trance") >= 3 ||  (getWatchedList().length > 20 && !jp_torrent_triggered)) {
         return "trancesurvey"
     }
 

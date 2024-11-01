@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import { goto } from "$app/navigation";
 
-    let satisfaction = 0;
+    let satisfaction : number = 0;
     let negativeEmotionFrequency = '';
-  
+
     // Evaluate function to ensure both questions are answered
     function evaluate() {
       if (satisfaction && negativeEmotionFrequency) {
@@ -21,7 +21,7 @@
     }
   
     // Helper to set the satisfaction rating based on star clicked
-    function setSatisfaction(value) {
+    function setSatisfaction(value : number) {
       satisfaction = value;
     }
   </script>

@@ -14,7 +14,7 @@
     <!-- Question 1: Satisfaction with experience -->
     <div class="question">
       <label>We are dissapointed to hear that Trance™ has not yet been effective for you.</label>
-      <label>While most of our patients report substantial reductions in feelings within a few weeks, some cases pf greif are more persistent.</label>
+      <label>While most of our patients report substantial reductions in feelings within a few weeks, some cases of greif are more persistent.</label>
     </div>
   
     <!-- Question 2: Negative emotion frequency -->
