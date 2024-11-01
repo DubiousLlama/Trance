@@ -4,6 +4,8 @@
 	import { reccomend, videoList, Video, getWatchedList, addWatchItem, getVideoByUrl, resetWatchHistory } from '$lib/reccomend';
 	import EmojiButtons from './emojiButtons.svelte';
 	import NavButtons from './navButtons.svelte';
+	import { checkEndConditions } from '$lib/checkendconditions';
+	import { goto } from '$app/navigation';
 
 	// Define player and timeout
 	let videoElement: HTMLVideoElement;
@@ -27,6 +29,10 @@
 		if (videoIndex >= getWatchedList().length) {
             let newVideoUrl = reccomend(videoList, currentVideo.url);
             addWatchItem(newVideoUrl);
+			let end = checkEndConditions(currentVideo.url);
+			if (end != "") {
+				goto("/" + end);
+			}
 			currentVideo = getVideoByUrl(newVideoUrl) ?? defaultVideo;
 		} else {
             let nextVideoUrl = getWatchedList().at(videoIndex) ?? defaultVideo.url;
