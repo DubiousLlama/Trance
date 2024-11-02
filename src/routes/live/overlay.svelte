@@ -6,12 +6,20 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="overlay" id="disease" on:click={buttonClick}>
-      <h1>William D. Elias-Mitchell Obituary</h1>
-      <p>
-        Will Elias-Mitchell passed away unexpectedly Wednesday, May 22, 2024, at Aurora Medical Center in Grafton. He was 22 years old.
-        William was born in Hartford on December 4, 2001, son of Bryan Mitchell and Tabitha Elias. He attended schools in the Port Washington-Saukville area and excelled in sports. Will played on youth teams for Port Washington Soccer Club and Port Washington Youth Baseball, and continued to play while he attended Port Washington High School. Following his sophomore year, Will transferred to Slinger High School, where he graduated with the Class of 2020.
-  
-        Following school, Will took a position with Mr. Mover in Saukville. He enjoyed his work and the people he worked with. In his down-time, Will liked to go fishing and work on his car.
+      <h1>Russel Elias-Mitchell Obituary</h1>
+      <p>Russel Elias-Mitchell passed away unexpectedly on August 3rd, 2024. He was 22.
+        <br>
+        <br>
+        Russel was known for for his warm smile, deadpan wit, and devotion to family.
+        He excelled in sports, and spent four years pitching for the Bearcats.
+        When he wasn't in the ballpark, was usually watching a show with friends,
+        filling them all in on his latest theories.
+        <br>
+        <br>
+        Russel graduated from Monroe High School in 2021. Afterward, he dedicated himself
+         to coaching little league, and found his calling behind the wheel, working as a 
+         delivery driver for Amazon. Jake is survived by his parents William Mitchell and 
+         Jennifer Elias, brother Andy, and girlfriend Lily.
       </p>
       <button id="escape">Escape</button>
   </div>
