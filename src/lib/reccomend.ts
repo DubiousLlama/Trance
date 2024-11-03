@@ -69,32 +69,36 @@ const videoConst: Video[] = [
   new Video("static/videos/Jake02.mp4", 2, ["minecraft", "outside"], -1, 1, ["static/videos/Jake01.mp4"], 14), // Second Jake vid
   new Video("static/videos/Jake03.mp4", 2, ["outside", "trance"], -1, 0.7, ["static/videos/Jake02.mp4"], 18), // Third Jake vid
   new Video("static/videos/Jake04.mp4", 2, ["outside", ], -1, 0.7, ["static/videos/Jake03.mp4"], 22), // Final Jake vid
-  new Video("static/videos/Podcast 1.mp4", 2, ["altright", "trance", "podcast"], 12, 0.2), // First podcast
+  new Video("static/videos/Podcast 1.mp4", 2, ["trance", "podcast"], 12, 0.2), // First podcast
   new Video("static/videos/Podcast 2.mp4", 2, ["altright", "trance", "podcast", "conspiracy"], -1, 0.7, ["static/videos/Podcast 1.mp4"], 16), // Second podcast
-  new Video("static/videos/Glitch.mp4", 1, ["trance"], -1, 0.7, [], 10),
+  new Video("static/videos/Glitch.mp4", 1, ["trance"], -1, 0.7, [], 20),
+  new Video("static/videos/tradwife.mp4", 1, ["altright", "podcast"], -1, 0.8),
+  new Video("static/videos/tradwife2.mp4", 1, ["altright", "podcast"], -1, 0.8, ["static/videos/tradwife.mp4"]),
 
   // Self-referential
   new Video("static/videos/stopscrolling.mp4", 2, ["algorithm", "trance"], 29, 0.5, [], 16), // Stop scrolling
   new Video("static/videos/welcometotheinternet.mp4", 3, ["capitalism", "trance"]),
 
   // Advertisements
-  new Video("static/videos/financepizza.mp4", 1, ["ad", "capitalism"], -1), //Finance a pizza
-  new Video("static/videos/mailchimp.mp4", 3, ["ad", "algorithm", "capitalism"], 9, 1, [], 7), // Real time behavior
-  new Video("static/videos/Replikaad.mp4", 3, ["altright", "ad", "capitalism"], -1, 1), //Replika
+  new Video("static/videos/financepizza.mp4", 1, ["capitalism"], -1), //Finance a pizza
+  new Video("static/videos/mailchimp.mp4", 2, ["ad", "algorithm", "capitalism"], 9, 1, [], 7), // Real time behavior
+  new Video("static/videos/Replikaad.mp4", 1, ["altright", "ad", "capitalism"], -1, 1), //Replika
+  new Video("static/videos/maya.mp4", 3, ["altright", "ad", "capitalism"], -1, 0.3, [], 11),
 
   //Random stuff
-  new Video("static/videos/trickshots.mp4", 1, ["empty"], -1, 1.25), // Trick shots
-  new Video("static/videos/suits.mp4", 1, ["empty"], -1, 0.5), // Suits
+  new Video("static/videos/trickshots.mp4", 1, ["empty"], -1, 0.6), // Trick shots
+  new Video("static/videos/suits.mp4", 1, ["empty"], -1, 0.25), // Suits
   new Video("static/videos/reddithorny.mp4", 1, ["minecraft", "empty"], -1, 0.5), // Horny
   new Video("static/videos/depressionskillissue.mp4", 2, ["empty", "altright", "minecraft", "depression"], -1, 2), // AITA for telling my GF depression is a skill issue
-
+  new Video("static/videos/suntzu.mp4", 1, ["empty"], -1, 0.5),
+  new Video("static/vidoes/dogs.mp4", 1, ["empty"], -1, 0.6),
 
   // Mental health
   new Video("static/videos/howknowdepression.mp4", 1, ["depression", "trance"], -1, 1.5),
   new Video("static/videos/selfdiagnose.mp4", 1, ["depression"], -1, 0.5),
   new Video("static/videos/niceguys.mp4", 1, ["depression"], -1, 1),
   new Video("static/videos/rockbottom.mp4", 1, ["depression"], -1, 0.75),
-
+  new Video("static/videos/tasks.mp4", 2, ["depression"], -1, 1),
 
   // Alt Right
   new Video("static/videos/dawkin.mp4", 1, ["altright"], -1, 0.5, [], 8),
@@ -174,8 +178,10 @@ function updateAlgorithm(type:string, tags:string[], add:boolean) {
 export function reccomend(videos: Video[], currentVideo:string): string {
   for (const video of videos) {
     if (watchedList.length == video.insert_at) {
-      console.log("Override detected")
-      video.chance = video.chance/10;
+      if (!watchedList.includes(video.url)) {
+        console.log("Override detected")
+        video.chance = video.chance/20;
+      }
       return video.url;
     }
   }
