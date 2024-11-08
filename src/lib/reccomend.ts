@@ -91,7 +91,7 @@ const videoConst: Video[] = [
   new Video("static/videos/reddithorny.mp4", 1, ["minecraft", "empty"], -1, 0.5), // Horny
   new Video("static/videos/depressionskillissue.mp4", 2, ["empty", "altright", "minecraft", "depression"], -1, 2), // AITA for telling my GF depression is a skill issue
   new Video("static/videos/suntzu.mp4", 1, ["empty"], -1, 0.5),
-  new Video("static/vidoes/dogs.mp4", 1, ["empty"], -1, 0.6),
+  new Video("static/videos/dogs.mp4", 1, ["empty"], -1, 0.6),
 
   // Mental health
   new Video("static/videos/howknowdepression.mp4", 1, ["depression", "trance"], -1, 1.5),

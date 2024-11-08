@@ -61,6 +61,7 @@
 				countdown--;
 			} else {
 				showExternalIframe = true;
+				backoff++;
 				clearInterval(countdownInterval);
 			}
 		}, 1000);
@@ -69,8 +70,7 @@
 	// Reset the countdown timer
 	export function resetTimer(): void {
 		clearInterval(countdownInterval);
-		countdown = 10 + 2.5*backoff;
-		backoff++;
+		countdown = 10 + 0.4*backoff;
 		showExternalIframe = false;
 		startCountdown();
 	}

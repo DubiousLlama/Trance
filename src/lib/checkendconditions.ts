@@ -44,7 +44,7 @@ export function checkEndConditions(url : string, react : string = "") : string {
     }
 
     // Check for the trance end condition
-    if (countReactedWithTag("trance") >= 3 ||  (getWatchedList().length > 20 && !jp_torrent_triggered)) {
+    if (countReactedWithTag("trance") >= 4 ||  (getWatchedList().length > 35 && !jp_torrent_triggered)) {
         return "trancesurvey"
     }
 
